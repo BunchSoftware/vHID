@@ -1,0 +1,19 @@
+﻿  Building 'vHID' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  Stamping x64\Release\vHID.inf
+  Stamping [Version] section with DriverVer=05/11/2025,12.11.56.659
+  vHID.vcxproj -> F:\Files\GitHub\vHID\driver\vHID\x64\Release\vHID.sys
+  Driver is 'Universal'.
+  .........................
+  Signability test complete.
+  
+  Errors:
+  None
+  
+  Warnings:
+  None
+  
+  Catalog generation complete.
+  F:\Files\GitHub\vHID\driver\vHID\x64\Release\vHID\vhid.cat
+  Done Adding Additional Store
+  Successfully signed: F:\Files\GitHub\vHID\driver\vHID\x64\Release\vHID\vhid.cat
+  

@@ -1,0 +1,70 @@
+;
+; vHID.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=USBDevice
+ClassGuid={88BAE032-5A81-49f0-BC3D-A4FF138216D6}
+Provider=%ManufacturerName%
+CatalogFile=vHID.cat
+DriverVer = 05/11/2025,12.11.56.659
+PnpLockDown=1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+vHID.sys  = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64.10.0...16299 ; %13% support introduced in build 16299
+
+[Standard.NTamd64.10.0...16299]
+%vHID.DeviceDesc%=vHID_Device, USB\VID_vvvv&PID_pppp
+
+[vHID_Device.NT]
+CopyFiles=File_Copy
+
+[File_Copy]
+vHID.sys
+
+[vHID_Device.NT.HW]
+AddReg=vHID_AddReg
+
+[vHID_AddReg]
+; By default, USBDevice class uses iProduct descriptor to name the device
+; Uncomment for this device to use %vHID.DeviceDesc%
+;HKR,,FriendlyName,,%vHID.DeviceDesc%
+
+;-------------- Service installation
+[vHID_Device.NT.Services]
+AddService = vHID,%SPSVCINST_ASSOCSERVICE%, vHID_Service_Inst
+
+; -------------- vHID driver install sections
+[vHID_Service_Inst]
+DisplayName    = %vHID.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\vHID.sys
+
+[vHID_Device.NT.Wdf]
+KmdfService =  vHID, vHID_wdfsect
+
+[vHID_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+DiskName = "vHID Installation Disk"
+vHID.DeviceDesc = "vHID Device"
+vHID.SVCDESC = "vHID Service"
